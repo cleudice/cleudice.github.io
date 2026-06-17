@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cleudice Santos — Backend Developer .NET & Flutter">
+  <title>cleudice@dev:~$</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d1117;
+      --bg2:       #161b22;
+      --bg3:       #21262d;
+      --green:     #39d353;
+      --green-dim: #196127;
+      --cyan:      #58a6ff;
+      --yellow:    #e3b341;
+      --red:       #f85149;
+      --purple:    #bc8cff;
+      --muted:     #8b949e;
+      --text:      #c9d1d9;
+      --border:    #30363d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── SCANLINE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.03) 2px,
+        rgba(0,0,0,.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── TERMINAL WINDOW ── */
+    .terminal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .terminal-bar {
+      background: var(--bg3);
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red    { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green  { background: #28c840; }
+
+    .terminal-title {
+      margin-left: auto;
+      margin-right: auto;
+      color: var(--muted);
+      font-size: .8rem;
+      transform: translateX(-18px);
+    }
+
+    .terminal-body {
+      padding: 1.4rem 1.6rem;
+    }
+
+    /* ── PROMPT ── */
+    .prompt { color: var(--green); }
+    .prompt-path { color: var(--cyan); }
+    .prompt-sym { color: var(--yellow); }
+
+    .cmd-line {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      margin-bottom: .25rem;
+    }
+
+    .cmd { color: var(--text); }
+
+    /* ── CURSOR ── */
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.1em;
+      background: var(--green);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── OUTPUT ── */
+    .output { margin-bottom: 1.2rem; padding-left: 1rem; }
+
+    .hero-name {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .04em;
+    }
+
+    .hero-role {
+      color: var(--cyan);
+      font-size: .95rem;
+      margin-top: .2rem;
+    }
+
+    .bio {
+      color: var(--text);
+      margin-top: .8rem;
+      max-width: 640px;
+    }
+
+    /* ── BADGES ── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .6rem;
+    }
+
+    .badge {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .15rem .55rem;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .badge-green  { border-color: var(--green-dim); color: var(--green); }
+    .badge-cyan   { border-color: #1c4b82;           color: var(--cyan); }
+    .badge-yellow { border-color: #6a4f18;           color: var(--yellow); }
+    .badge-purple { border-color: #4c3680;           color: var(--purple); }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .8rem;
+      margin-top: .6rem;
+    }
+
+    .skill-group {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .8rem 1rem;
+    }
+
+    .skill-group-title {
+      color: var(--yellow);
+      font-size: .8rem;
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .skill-item {
+      color: var(--text);
+      font-size: .82rem;
+      padding: .1rem 0;
+    }
+
+    .skill-item::before {
+      content: '▸ ';
+      color: var(--green);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: .8rem;
+      margin-top: .6rem;
+    }
+
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      text-decoration: none;
+      transition: border-color .2s, transform .15s;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .project-name {
+      color: var(--cyan);
+      font-weight: 500;
+      font-size: .9rem;
+    }
+
+    .project-name::before {
+      content: '📁 ';
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: .8rem;
+      margin-top: .4rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+      margin-top: .6rem;
+    }
+
+    .project-tag {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: .1rem .4rem;
+      font-size: .7rem;
+      color: var(--purple);
+    }
+
+    /* ── CONTACT ── */
+    .contact-list {
+      margin-top: .6rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .contact-item:hover .contact-value { color: var(--green); }
+
+    .contact-key  { color: var(--yellow); min-width: 90px; font-size: .85rem; }
+    .contact-sep  { color: var(--muted); }
+    .contact-value { color: var(--cyan); font-size: .85rem; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .75rem;
+      padding: 2rem 0 1rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .terminal-body { padding: 1rem; }
+      .hero-name { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── HERO ── -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">cleudice@dev — bash</span>
+    </div>
+    <div class="terminal-body">
+
+      <div class="cmd-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cmd">whoami</span>
+      </div>
+
+      <div class="output">
+        <div class="hero-name">Cleudice Santos</div>
+        <div class="hero-role">Backend Developer · .NET &amp; Flutter · 18+ anos</div>
+        <p class="bio">
+          Desenvolvedor Backend com foco em sistemas financeiros e portais de cliente.<br>
+          Apaixonado por Clean Architecture, observabilidade e ferramentas de IA assistida.
+        </p>
+        <div class="badge-row">
+          <span class="badge badge-green">.NET 8</span>
+          <span class="badge badge-green">C#</span>
+          <span class="badge badge-cyan">Flutter</span>
+          <span class="badge badge-yellow">Clean Arch</span>
+          <span class="badge badge-yellow">CQRS</span>
+          <span class="badge badge-purple">AI-assisted dev</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SKILLS ── -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">skills</span>
+    </div>
+    <div class="terminal-body">
+
+      <div class="cmd-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cmd">ls -la skills/</span>
+      </div>
+
+      <div class="output">
+        <div class="skills-grid">
+
+          <div class="skill-group">
+            <div class="skill-group-title">Backend</div>
+            <div class="skill-item">C# / .NET 8</div>
+            <div class="skill-item">.NET Framework 4.8</div>
+            <div class="skill-item">Clean Architecture</div>
+            <div class="skill-item">CQRS / MediatR</div>
+            <div class="skill-item">ADO.NET</div>
+            <div class="skill-item">Entity Framework</div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">Database</div>
+            <div class="skill-item">Oracle SQL</div>
+            <div class="skill-item">PL/SQL</div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">Mobile</div>
+            <div class="skill-item">Flutter</div>
+            <div class="skill-item">Dart</div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">DevOps &amp; Tools</div>
+            <div class="skill-item">Docker</div>
+            <div class="skill-item">Git / GitHub</div>
+            <div class="skill-item">Azure DevOps</div>
+            <div class="skill-item">Bitbucket</div>
+            <div class="skill-item">Jira</div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">Ambiente</div>
+            <div class="skill-item">Linux (Fedora)</div>
+            <div class="skill-item">PowerShell</div>
+            <div class="skill-item">VS Code</div>
+            <div class="skill-item">Visual Studio 2022</div>
+            <div class="skill-item">MCP Servers</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">projects</span>
+    </div>
+    <div class="terminal-body">
+
+      <div class="cmd-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cmd">git log --oneline --projects</span>
+      </div>
+
+      <div class="output">
+        <div class="projects-grid">
+
+          <a class="project-card" href="https://github.com/cleudice/forge" target="_blank" rel="noopener">
+            <div class="project-name">forge</div>
+            <div class="project-desc">Vault pessoal de skills, agents e automações para Claude Code</div>
+            <div class="project-tags">
+              <span class="project-tag">Claude Code</span>
+              <span class="project-tag">MCP</span>
+              <span class="project-tag">AI Dev</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://github.com/cleudice/flare-to-rive" target="_blank" rel="noopener">
+            <div class="project-name">flare-to-rive</div>
+            <div class="project-desc">Conversor de animações Flare para o formato Rive em .NET 8</div>
+            <div class="project-tags">
+              <span class="project-tag">.NET 8</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Animation</span>
+            </div>
+          </a>
+
+          <a class="project-card" href="https://github.com/cleudice/devtracker" target="_blank" rel="noopener">
+            <div class="project-name">devtracker</div>
+            <div class="project-desc">SaaS para tracking de desenvolvimento e métricas de produtividade</div>
+            <div class="project-tags">
+              <span class="project-tag">SaaS</span>
+              <span class="project-tag">.NET</span>
+              <span class="project-tag">Concept</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── CONTACT ── -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">contact</span>
+    </div>
+    <div class="terminal-body">
+
+      <div class="cmd-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cmd">cat contact.json</span>
+      </div>
+
+      <div class="output">
+        <div class="contact-list">
+
+          <a class="contact-item" href="https://github.com/cleudice" target="_blank" rel="noopener">
+            <span class="contact-key">"github"</span>
+            <span class="contact-sep">:</span>
+            <span class="contact-value">github.com/cleudice</span>
+          </a>
+
+          <a class="contact-item" href="https://linkedin.com/in/cleudice" target="_blank" rel="noopener">
+            <span class="contact-key">"linkedin"</span>
+            <span class="contact-sep">:</span>
+            <span class="contact-value">linkedin.com/in/cleudice</span>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="cmd-line" style="margin-top: .8rem;">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cursor"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Cleudice Santos · <span style="color: var(--green);">cleudice.github.io</span>
+  </div>
+
+</div>
+</body>
+</html>
