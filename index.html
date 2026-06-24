@@ -3,8 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cleudice Santos — Backend Developer .NET & Flutter">
+  <meta name="description" content="Cleudice Santos — Desenvolvedor Backend .NET &amp; Flutter, 18+ anos em sistemas financeiros e portais de cliente.">
+  <meta name="author" content="Cleudice Santos">
   <title>cleudice@dev:~$</title>
+
+  <!-- ── Open Graph / social preview ── -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cleudice Santos — Backend Developer .NET &amp; Flutter">
+  <meta property="og:description" content="18+ anos em sistemas financeiros, Clean Architecture, observabilidade e dev assistido por IA.">
+  <meta property="og:url" content="https://cleudice.github.io/">
+  <meta property="og:image" content="https://cleudice.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cleudice Santos — Backend Developer .NET &amp; Flutter">
+  <meta name="twitter:description" content="18+ anos em sistemas financeiros, Clean Architecture, observabilidade e dev assistido por IA.">
+  <meta name="twitter:image" content="https://cleudice.github.io/og-image.png">
+
+  <!-- ── Favicon (terminal prompt) ── -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230d1117'/%3E%3Ctext x='2' y='12' font-family='monospace' font-size='10' fill='%2339d353'%3E%3E_%3C/text%3E%3C/svg%3E">
+
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -288,10 +304,74 @@
       margin: 1.5rem 0;
     }
 
+    /* ── EXPERIENCE TIMELINE ── */
+    .timeline { margin-top: .6rem; }
+
+    .exp-item {
+      border-left: 2px solid var(--border);
+      padding: 0 0 1.1rem 1.1rem;
+      position: relative;
+    }
+    .exp-item:last-child { padding-bottom: 0; }
+
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -6px; top: .3rem;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--bg2);
+    }
+
+    .exp-role   { color: var(--cyan); font-weight: 500; font-size: .9rem; }
+    .exp-company{ color: var(--text); font-size: .85rem; }
+    .exp-period { color: var(--muted); font-size: .75rem; margin: .15rem 0 .4rem; }
+    .exp-desc   { color: var(--muted); font-size: .8rem; }
+
+    .exp-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .5rem; }
+    .exp-tag {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: .1rem .4rem;
+      font-size: .7rem;
+      color: var(--purple);
+    }
+
+    /* ── INTERACTIVE TERMINAL ── */
+    .term-output { min-height: 1.2rem; }
+    .term-output .line { white-space: pre-wrap; word-break: break-word; }
+    .term-output .ok    { color: var(--green); }
+    .term-output .info  { color: var(--cyan); }
+    .term-output .warn  { color: var(--yellow); }
+    .term-output .err   { color: var(--red); }
+    .term-output .dim   { color: var(--muted); }
+
+    .term-input-line { display: flex; align-items: baseline; gap: .5rem; }
+    .term-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      caret-color: var(--green);
+    }
+    .hint { color: var(--muted); font-size: .75rem; margin-top: .6rem; }
+    .hint code { color: var(--green); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 520px) {
       .terminal-body { padding: 1rem; }
       .hero-name { font-size: 1.4rem; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      body::before { display: none; }
     }
   </style>
 </head>
@@ -316,7 +396,7 @@
       </div>
 
       <div class="output">
-        <div class="hero-name">Cleudice Santos</div>
+        <h1 class="hero-name">Cleudice Santos</h1>
         <div class="hero-role">Backend Developer · .NET &amp; Flutter · 18+ anos</div>
         <p class="bio">
           Desenvolvedor Backend com foco em sistemas financeiros e portais de cliente.<br>
@@ -325,6 +405,7 @@
         <div class="badge-row">
           <span class="badge badge-green">.NET 8</span>
           <span class="badge badge-green">C#</span>
+          <span class="badge badge-green">Node.js</span>
           <span class="badge badge-cyan">Flutter</span>
           <span class="badge badge-yellow">Clean Arch</span>
           <span class="badge badge-yellow">CQRS</span>
@@ -363,6 +444,7 @@
             <div class="skill-item">CQRS / MediatR</div>
             <div class="skill-item">ADO.NET</div>
             <div class="skill-item">Entity Framework</div>
+            <div class="skill-item">Node.js</div>
           </div>
 
           <div class="skill-group">
@@ -401,6 +483,64 @@
     </div>
   </div>
 
+  <!-- ── EXPERIENCE ── -->
+  <!-- TODO Cleudice: troque os dados abaixo (cargo / empresa / período / descrição) pelos reais -->
+  <section class="terminal" aria-label="Experiência profissional">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">experience</span>
+    </div>
+    <div class="terminal-body">
+
+      <div class="cmd-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <span class="cmd">cat experience.log</span>
+      </div>
+
+      <div class="output">
+        <h2 class="skill-group-title" style="margin-bottom:.8rem;">Trajetória</h2>
+        <div class="timeline">
+
+          <div class="exp-item">
+            <div class="exp-role">TODO: Cargo atual</div>
+            <div class="exp-company">TODO: Empresa</div>
+            <div class="exp-period">TODO: 20XX — atual</div>
+            <div class="exp-desc">TODO: principais entregas — sistemas financeiros, portais de cliente, etc.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">.NET 8</span>
+              <span class="exp-tag">Clean Arch</span>
+              <span class="exp-tag">Oracle</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-role">TODO: Cargo anterior</div>
+            <div class="exp-company">TODO: Empresa</div>
+            <div class="exp-period">TODO: 20XX — 20XX</div>
+            <div class="exp-desc">TODO: descrição curta.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">.NET Framework</span>
+              <span class="exp-tag">Flutter</span>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-role">TODO: Início de carreira</div>
+            <div class="exp-company">TODO: Empresa</div>
+            <div class="exp-period">TODO: 20XX — 20XX</div>
+            <div class="exp-desc">TODO: descrição curta.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ── PROJECTS ── -->
   <div class="terminal">
     <div class="terminal-bar">
@@ -421,9 +561,9 @@
       <div class="output">
         <div class="projects-grid">
 
-          <a class="project-card" href="https://github.com/cleudice/codex" target="_blank" rel="noopener">
-            <div class="project-name">codex</div>
-            <div class="project-desc">Vault pessoal de skills, agents e automações para Claude Code</div>
+          <a class="project-card" href="https://github.com/cleudice/agent-skills" target="_blank" rel="noopener">
+            <div class="project-name">agent-skills</div>
+            <div class="project-desc">Coleção de Agent Skills de alta qualidade para agentes de IA (Claude Code, Copilot, Cursor, etc.)</div>
             <div class="project-tags">
               <span class="project-tag">Claude Code</span>
               <span class="project-tag">MCP</span>
@@ -431,25 +571,26 @@
             </div>
           </a>
 
-          <a class="project-card" href="https://github.com/cleudice/flare-to-rive" target="_blank" rel="noopener">
-            <div class="project-name">flare-to-rive</div>
-            <div class="project-desc">Conversor de animações Flare para o formato Rive em .NET 8</div>
+          <a class="project-card" href="https://github.com/cleudice/cleudice.github.io" target="_blank" rel="noopener">
+            <div class="project-name">cleudice.github.io</div>
+            <div class="project-desc">Este portfólio — single-page em estilo terminal, HTML/CSS/JS puro</div>
             <div class="project-tags">
-              <span class="project-tag">.NET 8</span>
-              <span class="project-tag">C#</span>
-              <span class="project-tag">Animation</span>
+              <span class="project-tag">HTML</span>
+              <span class="project-tag">CSS</span>
+              <span class="project-tag">JS</span>
             </div>
           </a>
 
-          <a class="project-card" href="https://github.com/cleudice/devtracker" target="_blank" rel="noopener">
+          <!-- TODO Cleudice: troque por um repo real ou remova este card -->
+          <div class="project-card" style="cursor:default;">
             <div class="project-name">devtracker</div>
             <div class="project-desc">SaaS para tracking de desenvolvimento e métricas de produtividade</div>
             <div class="project-tags">
               <span class="project-tag">SaaS</span>
               <span class="project-tag">.NET</span>
-              <span class="project-tag">Concept</span>
+              <span class="project-tag">Conceito · em breve</span>
             </div>
-          </a>
+          </div>
 
         </div>
       </div>
@@ -477,6 +618,12 @@
       <div class="output">
         <div class="contact-list">
 
+          <a class="contact-item" href="mailto:cleudice.ms@gmail.com">
+            <span class="contact-key">"email"</span>
+            <span class="contact-sep">:</span>
+            <span class="contact-value">cleudice.ms@gmail.com</span>
+          </a>
+
           <a class="contact-item" href="https://github.com/cleudice" target="_blank" rel="noopener">
             <span class="contact-key">"github"</span>
             <span class="contact-sep">:</span>
@@ -489,23 +636,148 @@
             <span class="contact-value">linkedin.com/in/cleudice</span>
           </a>
 
-        </div>
-      </div>
+          <div class="contact-item">
+            <span class="contact-key">"local"</span>
+            <span class="contact-sep">:</span>
+            <span class="contact-value">Brasil · Remoto &nbsp;<span class="dim" style="color:var(--muted)">(TODO: cidade/UF)</span></span>
+          </div>
 
-      <div class="cmd-line" style="margin-top: .8rem;">
-        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
-        <span class="prompt-path">~</span>
-        <span class="prompt-sym">$</span>
-        <span class="cursor"></span>
+          <div class="contact-item">
+            <span class="contact-key">"idiomas"</span>
+            <span class="contact-sep">:</span>
+            <span class="contact-value">Português · Inglês técnico</span>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </div>
+
+  <!-- ── INTERACTIVE CONSOLE ── -->
+  <section class="terminal" aria-label="Console interativo">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="terminal-title">try it — console</span>
+    </div>
+    <div class="terminal-body">
+      <div class="term-output" id="term-output">
+        <div class="line"><span class="dim">Digite</span> <span class="ok">help</span> <span class="dim">e pressione Enter para começar.</span></div>
+      </div>
+      <div class="term-input-line">
+        <span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span>
+        <span class="prompt-path">~</span>
+        <span class="prompt-sym">$</span>
+        <input class="term-input" id="term-input" type="text" autocomplete="off" autocapitalize="off"
+               spellcheck="false" aria-label="Linha de comando interativa" placeholder="help">
+      </div>
+      <div class="hint">Comandos: <code>help</code> <code>whoami</code> <code>skills</code> <code>projects</code> <code>experience</code> <code>contact</code> <code>clear</code></div>
+    </div>
+  </section>
 
   <div class="footer">
     &copy; 2026 Cleudice Santos · <span style="color: var(--green);">cleudice.github.io</span>
   </div>
 
 </div>
+
+<script>
+(function () {
+  const out   = document.getElementById('term-output');
+  const input = document.getElementById('term-input');
+  if (!out || !input) return;
+
+  const history = [];
+  let histIdx = -1;
+
+  function print(html, cls) {
+    const div = document.createElement('div');
+    div.className = 'line' + (cls ? ' ' + cls : '');
+    div.innerHTML = html;
+    out.appendChild(div);
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => (
+      { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
+    ));
+  }
+
+  function echoCmd(cmd) {
+    print(
+      '<span class="prompt">cleudice<span class="prompt-sym">@</span>dev</span> ' +
+      '<span class="prompt-path">~</span> <span class="prompt-sym">$</span> ' +
+      escapeHtml(cmd)
+    );
+  }
+
+  const commands = {
+    help() {
+      print('Comandos disponíveis:', 'info');
+      print('  <span class="ok">whoami</span>     — quem é a Cleudice');
+      print('  <span class="ok">skills</span>     — stack técnica');
+      print('  <span class="ok">projects</span>   — repositórios');
+      print('  <span class="ok">experience</span> — trajetória profissional');
+      print('  <span class="ok">contact</span>    — como falar comigo');
+      print('  <span class="ok">date</span>       — data e hora');
+      print('  <span class="ok">clear</span>      — limpa o console');
+    },
+    whoami() {
+      print('Cleudice Santos', 'ok');
+      print('Backend Developer · .NET &amp; Flutter · 18+ anos', 'info');
+      print('Foco em sistemas financeiros, Clean Architecture e dev assistido por IA.', 'dim');
+    },
+    skills() {
+      print('Backend  : C# / .NET 8, .NET Framework 4.8, Clean Arch, CQRS/MediatR, EF, ADO.NET, Node.js', 'info');
+      print('Database : Oracle SQL, PL/SQL', 'info');
+      print('Mobile   : Flutter, Dart', 'info');
+      print('DevOps   : Docker, Git, Azure DevOps, Bitbucket, Jira', 'info');
+      print('Ambiente : Linux (Fedora), PowerShell, VS Code, VS 2022, MCP Servers', 'info');
+    },
+    projects() {
+      print('agent-skills        github.com/cleudice/agent-skills', 'info');
+      print('cleudice.github.io  github.com/cleudice/cleudice.github.io', 'info');
+      print('devtracker          conceito · em breve', 'dim');
+    },
+    experience() {
+      print('Role para cima e veja a timeline completa (cat experience.log).', 'warn');
+    },
+    contact() {
+      print('email    : cleudice.ms@gmail.com', 'info');
+      print('github   : github.com/cleudice', 'info');
+      print('linkedin : linkedin.com/in/cleudice', 'info');
+    },
+    social() { commands.contact(); },
+    date() { print(new Date().toString(), 'dim'); },
+    echo(args) { print(escapeHtml(args.join(' '))); },
+    sudo() { print('cleudice is not in the sudoers file. This incident will be reported. 😏', 'err'); },
+    clear() { out.innerHTML = ''; },
+    ls() { commands.projects(); }
+  };
+
+  function run(raw) {
+    const cmd = raw.trim();
+    if (!cmd) return;
+    echoCmd(cmd);
+    history.push(cmd); histIdx = history.length;
+    const parts = cmd.split(/\s+/);
+    const name = parts.shift();
+    const fn = commands[name.toLowerCase()];
+    if (fn) fn(parts);
+    else print('comando não encontrado: ' + escapeHtml(name) + " — digite 'help'", 'err');
+    input.scrollIntoView({ block: 'nearest' });
+  }
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { run(input.value); input.value = ''; }
+    else if (e.key === 'ArrowUp')   { if (histIdx > 0) input.value = history[--histIdx] || ''; e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { if (histIdx < history.length - 1) input.value = history[++histIdx] || ''; else { histIdx = history.length; input.value = ''; } e.preventDefault(); }
+  });
+
+  out.closest('.terminal-body').addEventListener('click', () => input.focus());
+})();
+</script>
 </body>
 </html>
